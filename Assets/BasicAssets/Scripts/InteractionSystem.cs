@@ -18,6 +18,7 @@ public class InteractionSystem : MonoBehaviour
         Ray ray = cameraObj.GetComponent<Camera>().ViewportPointToRay(new Vector3(0.5F, 0.5F, 0));
         RaycastHit hit;
         bool showPrompt = false;
+        string newMessage = "";
 
         if(!UISystem.instance.UIInFocus){
             if (Physics.Raycast(ray, out hit, interactDistance, interactLayer)){
@@ -27,7 +28,7 @@ public class InteractionSystem : MonoBehaviour
 
                     if(interactable.enabled && interactable.CanInteract()){
                         showPrompt = true;
-                        flavorTown = interactable.flavorTown;
+                        newMessage = interactable.flavorTown;
 
                         if(InputHandler.GetInteractButtonDown()){
                             interactable.InteractBase();
@@ -38,9 +39,10 @@ public class InteractionSystem : MonoBehaviour
             }
         }
 
-        if(promptShowing != showPrompt){
-            UISystem.SetInteractPrompt(flavorTown, showPrompt);
+        if(promptShowing != showPrompt || !newMessage.Equals(flavorTown)){
+            UISystem.SetInteractPrompt(newMessage, showPrompt);
             promptShowing = showPrompt;
+            flavorTown = newMessage;
         }
     }
 }

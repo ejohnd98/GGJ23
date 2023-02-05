@@ -54,7 +54,8 @@ public class PlayerController : MonoBehaviour
     }
 
     public void ChangeMouseSensitivity(float amount){
-        mouseSensitivity = Mathf.Clamp(mouseSensitivity+amount, 0.3f, 2.0f);
+        mouseSensitivity = Mathf.Clamp(mouseSensitivity+amount, 0.1f, 3.0f);
+        UISystem.ShowMousePrompt(mouseSensitivity);
     }
 
     private void OnEnable() {
@@ -110,6 +111,15 @@ public class PlayerController : MonoBehaviour
     }
 
     void HandleInput(){
+
+        if(InputHandler.GetGenericDown(KeyCode.Plus) || InputHandler.GetGenericDown(KeyCode.Equals)){
+            ChangeMouseSensitivity(0.1f);
+        }else if(InputHandler.GetGenericDown(KeyCode.Minus) || InputHandler.GetGenericDown(KeyCode.Underscore)){
+            ChangeMouseSensitivity(-0.1f);
+        }
+
+
+
         if(!freezePosition){
             Vector3 directionVector = (transform.right * InputHandler.GetHorizontalAxis()) + (transform.forward * InputHandler.GetVerticalAxis());
 

@@ -7,7 +7,7 @@ public class UISystem : MonoBehaviour
 {
     public static UISystem instance;
 
-    public Transform promptParent, interactPrompt, textPrompt;
+    public Transform promptParent, interactPrompt, textPrompt, mousePrompt;
     public bool UIInFocus = false;
     string currentUIFocus;
     bool interactInputBuffer = false;
@@ -47,6 +47,15 @@ public class UISystem : MonoBehaviour
         currentUIFocus = name;
         SetPromptVisible(currentUIFocus, true);
         FocusOnUI();
+    }
+
+    public static void ShowMousePrompt(float newSensitivty){
+        if(instance.mousePrompt.gameObject.activeSelf){
+            instance.mousePrompt.gameObject.SetActive(false);
+            instance.mousePrompt.gameObject.SetActive(true);
+        }
+        instance.mousePrompt.GetComponent<TMP_Text>().text = "Mouse Sensitivity: \n" + newSensitivty.ToString("F1");
+        instance.mousePrompt.gameObject.SetActive(true);
     }
 
     public static void ShowTextToPlayer(string text){

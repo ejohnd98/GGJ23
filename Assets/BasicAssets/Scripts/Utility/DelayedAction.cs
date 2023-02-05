@@ -15,6 +15,7 @@ public class DelayedAction : MonoBehaviour
     private Action[] actions;
     public bool onStart = false;
     public bool onEnable = false;
+    public bool loop = false;
 
     private float counter;
     private int actionIndex;
@@ -45,7 +46,12 @@ public class DelayedAction : MonoBehaviour
             counter += Time.deltaTime;
 
             if(actionIndex >= actions.Length){
-                performingActions = false;
+                if(loop){
+                    actionIndex = 0;
+                    counter = 0.0f;
+                }else{
+                    performingActions = false;
+                }   
             }
         }
     }
